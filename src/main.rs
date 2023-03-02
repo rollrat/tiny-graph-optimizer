@@ -1,8 +1,33 @@
-use std::rc::{Rc, Weak};
+use std::{
+    cmp::Ordering,
+    io,
+    rc::{Rc, Weak},
+};
 
+#[derive(Debug)]
 struct MatrixDescription {
     column_size: u32,
     row_size: u32,
+}
+
+impl MatrixDescription {
+    fn create(column_size: u32, row_size: u32) -> MatrixDescription {
+        MatrixDescription {
+            column_size,
+            row_size,
+        }
+    }
+
+    fn inv(&self) -> MatrixDescription {
+        MatrixDescription {
+            column_size: self.row_size,
+            row_size: self.column_size,
+        }
+    }
+
+    fn can_multiply(&self, other: &MatrixDescription) -> bool {
+        (&self).column_size == other.row_size
+    }
 }
 
 struct GraphNode {
@@ -28,5 +53,5 @@ struct GraphOperator {
 fn simulate_graph(node: GraphNode) {}
 
 fn main() {
-    println!("Hello, world!");
+    MatrixDescription::create(3, 4);
 }
